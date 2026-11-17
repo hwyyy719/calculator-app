@@ -1,5 +1,7 @@
+// 在檔案開頭增加記憶變數
 let display = document.getElementById('display');
 let currentInput = '0';
+let memoryValue = 0;  // 新增記憶變數
 
 function updateDisplay() {
     display.textContent = currentInput;
@@ -27,22 +29,7 @@ function deleteLast() {
     }
     updateDisplay();
 }
-// 故意註解掉或刪除這個函數
-/*
-function calculate() {
-    try {
-        currentInput = eval(currentInput).toString();
-        updateDisplay();
-    } catch (error) {
-        currentInput = 'Error';
-        updateDisplay();
-        setTimeout(() => {
-            currentInput = '0';
-            updateDisplay();
-        }, 1500);
-    }
-}
-*/
+
 function calculate() {
     try {
         currentInput = eval(currentInput).toString();
@@ -69,4 +56,47 @@ function calculatePercentage() {
             updateDisplay();
         }, 1500);
     }
+}
+// 新增記憶功能函數
+function memoryAdd() {
+    try {
+        let currentValue = eval(currentInput);
+        memoryValue += currentValue;
+        console.log('Memory:', memoryValue);
+        // 可選：顯示提示
+        showMemoryIndicator();
+    } catch (error) {
+        console.error('Memory add error:', error);
+    }
+}
+
+function memorySubtract() {
+    try {
+        let currentValue = eval(currentInput);
+        memoryValue -= currentValue;
+        console.log('Memory:', memoryValue);
+        showMemoryIndicator();
+    } catch (error) {
+        console.error('Memory subtract error:', error);
+    }
+}
+
+function memoryRecall() {
+    currentInput = memoryValue.toString();
+    updateDisplay();
+}
+
+function memoryClear() {
+    memoryValue = 0;
+    console.log('Memory cleared');
+    hideMemoryIndicator();
+}
+
+// 可選：顯示記憶指示器
+function showMemoryIndicator() {
+    display.style.borderLeft = '5px solid #ff9800';
+}
+
+function hideMemoryIndicator() {
+    display.style.borderLeft = 'none';
 }
